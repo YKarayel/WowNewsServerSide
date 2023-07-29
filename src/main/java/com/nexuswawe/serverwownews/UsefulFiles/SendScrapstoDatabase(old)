@@ -1,0 +1,48 @@
+package com.nexuswawe.serverwownews;
+
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.List;
+
+public class SendScrapstoDatabase {
+
+    public static void  sendScrapstoDatabase() throws IOException, InterruptedException {
+
+        try {
+            FileInputStream serviceAccount = new FileInputStream("wownews-8d9b8-firebase-adminsdk-phqt7-6c6ea24f27.json"); //Düzeltilecek
+
+            FirebaseOptions options = FirebaseOptions.builder()
+                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .setDatabaseUrl("https://wownews-8d9b8-default-rtdb.europe-west1.firebasedatabase.app")
+                    .build();
+            FirebaseApp firebaseApp = FirebaseApp.initializeApp(options);
+            System.out.println("Firebase initialized.");
+
+            // Realtime Database bağlantısı
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            System.out.println("databa instance openne. Waiting for  database referance");
+            DatabaseReference ref = database.getReference("wowhead_news");
+            DatabaseReference tokenRef = database.getReference("wow_tokens");
+
+
+            // UiPosts sınıfından veri almak ve Firebase Realtime Database'e yazmak
+            List<WowheadNews> wowheadNewsList =  ScrapData.scrapData();
+            ref.setValueAsync(wowheadNewsList);
+
+            List<String> wowTokensList = ScrapData.WowToken();
+            tokenRef.setValueAsync(wowTokensList);
+
+
+            firebaseApp.delete();
+        } catch (Exception e) {
+            System.out.println("Firebase bağlantı hatası: " + e.getMessage());
+        }
+
+    }
+}
