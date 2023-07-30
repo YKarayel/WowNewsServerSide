@@ -1,7 +1,7 @@
 # WowNewsServerSide
 <b>It is the server side of the android application called WoW News.</b>
 
-<h3>What the server does:</h3>
+<h2>What the server does:</h2>
 <ul>
 
 <li>With the Webscrapping (html) method , it pulls the datas from the other side.</li>
