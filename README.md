@@ -1,6 +1,9 @@
 # WowNewsServerSide
 <b>It is the server side of the android application called WoW News.</b>
 
+<p>App Link: https://play.google.com/store/apps/details?id=com.nexuswawe.wownews</p>
+<p>For client side codes : https://github.com/YKarayel/WowNewsClientApp</p>
+
 <h2>What the server does:</h2>
 <ul>
 
